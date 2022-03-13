@@ -18,5 +18,9 @@ RUN pip install jupyterlab \
 		seaborn \
 		click
 
+RUN pip install flask \
+		flask_restful \
+		flask_sqlalchemy
+
 # add git, vim and curl
 RUN apt-get -y install git

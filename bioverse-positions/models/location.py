@@ -3,6 +3,7 @@ from db import db
 class LocationModel(db.Model):
     __tablename__ = 'locations'
 
+    id = db.Column(db.Integer, primary_key=True)
     hex_id = db.Column(db.String(15))
     zoom = db.Column(db.Integer)
     species = db.Column(db.String(100))
@@ -26,7 +27,7 @@ class LocationModel(db.Model):
         }
 
     @classmethod
-    def get_location(cls, hex_id, zoom, genus, species):
+    def get_location(cls, hex_id, zoom, genus, species, **kwargs):
         return cls.query.filter_by(
             hex_id=hex_id, zoom=zoom, genus=genus, species=species
         ).first()

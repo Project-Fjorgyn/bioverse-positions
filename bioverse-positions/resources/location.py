@@ -1,29 +1,29 @@
-from flask_restful import Resource, reqparser
+from flask_restful import Resource, reqparse
 
 from models.location import LocationModel
 
 class Location(Resource):
-    parser = reqparser.RequestParser()
+    parser = reqparse.RequestParser()
     parser.add_argument(
-        'hex_id'
+        'hex_id',
         type=str,
         required=True,
         help='h3 hex id'
     )
     parser.add_argument(
-        'zoom'
+        'zoom',
         type=int,
         required=True,
         help='h3 zoom level'
     )
     parser.add_argument(
-        'genus'
+        'genus',
         type=str,
         required=True,
         help='genus of the species'
     )
     parser.add_argument(
-        'species'
+        'species',
         type=str,
         required=True,
         help='species name'
@@ -31,7 +31,7 @@ class Location(Resource):
 
     insert_parser = parser.copy()
     insert_parser.add_argument(
-        'count'
+        'count',
         type=int,
         required=True,
         help='occurences'

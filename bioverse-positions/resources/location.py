@@ -11,12 +11,6 @@ class Location(Resource):
         help='h3 hex id'
     )
     parser.add_argument(
-        'zoom',
-        type=int,
-        required=True,
-        help='h3 zoom level'
-    )
-    parser.add_argument(
         'genus',
         type=str,
         required=True,

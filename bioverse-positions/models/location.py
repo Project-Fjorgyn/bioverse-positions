@@ -32,6 +32,13 @@ class LocationModel(db.Model):
             hex_id=hex_id, zoom=zoom, genus=genus, species=species
         ).first()
 
+    @classmethod
+    def get_locations(cls, hex_ids, genus, species, **kwargs):
+        hex_ids_list = hex_ids.split(',')
+        return cls.query.filter_by(
+            species=species, genus=genus,
+        ).filter(cls.hex_id.in_(hex_ids_list)).all()
+
     def save_to_db(self):
         db.session.add(self)
         db.session.commit()

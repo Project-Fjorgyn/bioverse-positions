@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_restful import Api
 
-from resources.location import Location
+from resources.location import Location, Locations
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
@@ -14,6 +14,7 @@ def create_tables():
     db.create_all()
 
 api.add_resource(Location, '/location')
+api.add_resource(Locations, '/locations')
 
 if __name__ == '__main__':
     from db import db 

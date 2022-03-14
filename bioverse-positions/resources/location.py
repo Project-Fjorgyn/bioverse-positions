@@ -80,3 +80,30 @@ class Location(Resource):
             return {'message': 'Error occurred during insert'}, 500
 
         return location.json(), 201
+
+
+class Locations(Resource):
+    parser = reqparse.RequestParser()
+    parser.add_argument(
+        'hex_ids',
+        type=str,
+        required=True,
+        help='hex ids to search, comma separated'
+    )
+    parser.add_argument(
+        'genus',
+        type=str,
+        required=True,
+        help='genus of the species'
+    )
+    parser.add_argument(
+        'species',
+        type=str,
+        required=True,
+        help='species name'
+    )
+
+    def get(self):
+        kwargs = Locations.parser.parse_args()
+        return [location.json() for location in LocationModel.get_locations(**kwargs)]
+

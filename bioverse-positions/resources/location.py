@@ -1,4 +1,5 @@
 from flask_restful import Resource, reqparse
+from h3 import polyfill
 
 from models.location import LocationModel
 
@@ -79,10 +80,22 @@ class Location(Resource):
 class Locations(Resource):
     parser = reqparse.RequestParser()
     parser.add_argument(
-        'hex_ids',
+        'lat',
         type=str,
         required=True,
-        help='hex ids to search, comma separated'
+        help='polygon latitude coordinates, comma separated'
+    )
+    parser.add_argument(
+        'lon',
+        type=str,
+        required=True,
+        help='polygon longitude coordinates, comma separated'
+    )
+    parser.add_argument(
+        'zoom',
+        type=str,
+        required=True,
+        help='h3 zoom level'
     )
     parser.add_argument(
         'genus',
@@ -99,5 +112,21 @@ class Locations(Resource):
 
     def get(self):
         kwargs = Locations.parser.parse_args()
-        return [location.json() for location in LocationModel.get_locations(**kwargs)]
-
+        coordinates = [
+            [float(lat), float(lon)]
+            for lon, lat in zip(
+                kwargs['lon'].split(','), kwargs['lat'].split(',')
+            )
+        ]
+        polygon = {
+            'type': 'Polygon',
+            'coordinates': [coordinates]
+        }
+        hex_ids = polyfill(polygon, res=int(kwargs['zoom']))
+        return [
+            location.json() 
+            for location in 
+            LocationModel.get_locations(
+                hex_ids, kwargs['genus'], kwargs['species']
+            )
+        ]

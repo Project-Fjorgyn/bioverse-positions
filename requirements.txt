@@ -1,0 +1,6 @@
+flask
+flask_restful
+flask_sqlalchemy
+h3
+uwsgi
+psycopg2

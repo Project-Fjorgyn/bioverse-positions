@@ -18,5 +18,14 @@ RUN pip install jupyterlab \
 		seaborn \
 		click
 
+RUN pip install flask \
+		flask_restful \
+		flask_sqlalchemy
+
+RUN pip install h3
+
 # add git, vim and curl
 RUN apt-get -y install git
+
+RUN apt-get -y install npm 
+RUN npm install -g heroku

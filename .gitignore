@@ -1,0 +1,4 @@
+.devcontainer
+*.pyc
+data.db
+.ipynb_checkpoints
